@@ -10,15 +10,28 @@ const Button = ({onClick, text}) => {
 const Statistics = (props) => {
     const {good, neutral, bad, all, average, positive} = props;
 
+    let content;
+
+    if (good < 1 && neutral < 1 && bad < 1) {
+        content = <p>No feedback given</p>;
+    }
+    else {
+        content = (
+            <>
+                <p>good {good}</p>
+                <p>neutral {neutral}</p>
+                <p>bad {bad}</p>
+                <p>all {all}</p>
+                <p>average {average}</p>
+                <p>positive {positive}</p>
+            </>
+        );
+    }
+
     return (
         <div>
             <h1>statistics</h1>
-            <p>good {good}</p>
-            <p>neutral {neutral}</p>
-            <p>bad {bad}</p>
-            <p>all {all}</p>
-            <p>average {average}</p>
-            <p>positive {positive}</p>
+            {content}
         </div>
     );
 };

@@ -21,12 +21,12 @@ const Content = ({parts}) => {
     return partsHtml();
 };
 
-const Total = (props) => {
-    let exerciseCounts = props.parts.map(part => part.exercises);
+const Total = ({parts}) => {
+    let exerciseCounts = parts.map(part => part.exercises);
     let sum = exerciseCounts.reduce((prev, exercises) => prev + exercises);
 
     return (
-        <p>Number of exercises: {sum}</p>
+        <b>total of {sum} exercises</b>
     );
 };
 

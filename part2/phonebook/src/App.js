@@ -3,19 +3,25 @@ import Numbers from './components/Numbers';
 
 const App = () => {
     const [ persons, setPersons ] = useState([
-        { name: 'Arto Hellas' }
+        {
+            name: 'Arto Hellas',
+            number: '040-1234567'
+        }
     ]);
 
     const [ newName, setNewName ] = useState('');
-
-    const numbers = persons.map(p => <li key={p.name}>{p.name}</li>);
+    const [ newNumber, setNewNumber ] = useState('');
 
     const handleNewNameChange = (event) => setNewName(event.target.value);
+    const handleNewNumberChange = (event) => setNewNumber(event.target.value);
 
     const submitNewName = (event) => {
         event.preventDefault();
 
-        const newEntry = { name: newName };
+        const newEntry = {
+            name: newName,
+            number: newNumber
+        };
 
         if (isPersonAdded(newEntry)) return;
 
@@ -37,13 +43,18 @@ const App = () => {
     	    <h2>Phonebook</h2>
             <form onSubmit={submitNewName}>
                 <div>
-                    name: <input value={newName} onChange={handleNewNameChange}/>
+                    <p>
+                        name: <input value={newName} onChange={handleNewNameChange}/>
+                    </p>
+                    <p>
+                        number: <input value={newNumber} onChange={handleNewNumberChange}/>
+                    </p>
                 </div>
                 <div>
                     <button type="submit">add</button>
                 </div>
             </form>
-            <Numbers numbers={numbers}/>
+            <Numbers persons={persons}/>
         </div>
     );
 };

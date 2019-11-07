@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Numbers = ({numbers}) => {
+const Numbers = ({ numbers }) => {
     return (
         <>
             <h2>Numbers</h2>

@@ -6,14 +6,21 @@ const App = () => {
         {
             name: 'Arto Hellas',
             number: '040-1234567'
+        },
+        {
+            name: 'Test test',
+            number: '123456789'
         }
     ]);
 
     const [ newName, setNewName ] = useState('');
     const [ newNumber, setNewNumber ] = useState('');
+    const [ filter, setFilter ] = useState('');
 
     const handleNewNameChange = (event) => setNewName(event.target.value);
     const handleNewNumberChange = (event) => setNewNumber(event.target.value);
+    
+    const handleFilterChange = (event) => setFilter(event.target.value);
 
     const submitNewName = (event) => {
         event.preventDefault();
@@ -41,6 +48,8 @@ const App = () => {
     return (
         <div>
     	    <h2>Phonebook</h2>
+            filter shown with <input value={filter} onChange={handleFilterChange}/>
+            <h2>add a new entry</h2>
             <form onSubmit={submitNewName}>
                 <div>
                     <p>
@@ -54,7 +63,7 @@ const App = () => {
                     <button type="submit">add</button>
                 </div>
             </form>
-            <Numbers persons={persons}/>
+            <Numbers persons={persons.filter(p => p.name.includes(filter))}/>
         </div>
     );
 };

@@ -8,11 +8,13 @@ const App = () => {
   const [ filter, setFilter ] = useState('');
   const [ countries, setCountries ] = useState([]);
 
-  useEffect(() => {
+  const getCountriesFromApi = () => {
     axios
       .get(api)
       .then(response => setCountries(response.data));
-  }, []);
+  };
+
+  useEffect(getCountriesFromApi, []);
   
   const onFilterChanged = ({ target: { value } }) => {
     setFilter(value);

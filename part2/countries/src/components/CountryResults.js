@@ -1,5 +1,6 @@
 import React from 'react';
 import Country from './Country';
+import CountryResult from './CountryResult';
 
 const CountryResults = ({ countries, filter }) => {
     const filterCountries = (countries, filter) => countries.filter(({ name }) => matchFilter(name, filter));
@@ -7,8 +8,6 @@ const CountryResults = ({ countries, filter }) => {
     const matchFilter = (name, filter) => name.toLowerCase().includes(filter.toLowerCase());
 
     const filteredCountries = filterCountries(countries, filter);
-
-    console.log(filteredCountries.length);
 
     if (filteredCountries.length > 10) {
         return (
@@ -24,7 +23,9 @@ const CountryResults = ({ countries, filter }) => {
 
     return (
         <ul>
-            {filteredCountries.map(country => <li key={country.numericCode}>{country.name}</li>)}
+            {filteredCountries.map(country => 
+                <CountryResult key={country.numericCode} country={country}/>
+            )} 
         </ul>
     );
 };

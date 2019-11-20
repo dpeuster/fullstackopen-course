@@ -5,17 +5,20 @@ import PersonForm from './components/PersonForm';
 import Filter from './components/Filter';
 
 const App = () => {
-    const [ persons, setPersons ] = useState([]);
+    const apiLink = "http://localhost:3001/persons";
 
-    useEffect(() => {
+    const [ persons, setPersons ] = useState([]);
+    const [ filter, setFilter ] = useState('');
+
+    const getPersons = () => {
         axios
-            .get('http://localhost:3001/persons')
+            .get(apiLink)
             .then(response => {
                 setPersons(response.data);
-            })
-    }, []);
+            });
+    };
 
-    const [ filter, setFilter ] = useState('');
+    useEffect(getPersons, []);
 
     const onFilterChange = (newFilter) => {
         setFilter(newFilter);
@@ -24,7 +27,13 @@ const App = () => {
     const submitNewName = (entry) => {
         if (isPersonAdded(entry)) return;
 
-        setPersons(persons.concat(entry));
+        axios.post(apiLink, entry).then(() => addPersonToLocalList(entry));
+    }
+
+    const addPersonToLocalList = (entry) => {
+        const newList = persons.concat(entry);
+
+        setPersons(newList);
     }
 
     const isPersonAdded = ({ name }) => {

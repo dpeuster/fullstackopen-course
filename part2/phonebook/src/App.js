@@ -23,24 +23,38 @@ const App = () => {
     };
 
     const submitNewName = (entry) => {
-        if (isPersonAdded(entry)) return;
+        if (isPersonAdded(entry)) {
+            updateEntry(entry);
+
+            return;
+        }
 
         personService.create(entry).then(addPersonToLocalList);
+    };
+
+    const isPersonAdded = ({ name }) => {
+        return persons.findIndex(p => p.name === name) > -1;
+    };
+
+    const updateEntry = (entry) => {
+        if (window.confirm(`${entry.name} is already added to the phonebook. Do you want to replace the number?`)) {
+            const existingEntry = persons.find(person => person.name === entry.name);
+            const changedEntry = { ...entry, id: existingEntry.id };
+
+            personService.update(changedEntry).then(updatePersonInLocalList);
+        }
+    };
+
+    const updatePersonInLocalList = (entry) => {
+        const newList = persons.map(person => person.id !== entry.id ? person : entry);
+
+        setPersons(newList);
     };
 
     const addPersonToLocalList = (entry) => {
         const newList = persons.concat(entry);
 
         setPersons(newList);
-    };
-
-    const isPersonAdded = ({ name }) => {
-        if (persons.findIndex(p => p.name === name) > -1) {
-            alert(`${name} is already added to the phonebook`);
-            return true;
-        }
-
-        return false;
     };
 
     const removeEntry = (id) => {
@@ -58,7 +72,7 @@ const App = () => {
     return (
         <div>
     	    <h2>Phonebook</h2>
-            <Filter onChange={onFilterChange} />
+            <Filter filter={filter} onChange={onFilterChange} />
             <h2>add a new entry</h2>
             <PersonForm onSubmit={submitNewName} />
             <Numbers persons={persons.filter(p => p.name.includes(filter))} onRemove={removeEntry}/>

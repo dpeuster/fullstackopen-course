@@ -17,6 +17,13 @@ const create = async (entry) => {
     return response.data;
 };
 
+const update = async (entry) => {
+    const request = axios.put(`${apiLink}/${entry.id}`, entry);
+
+    const response = await request;
+    return response.data;
+};
+
 const remove = async (id) => {
     const request = axios.delete(`${apiLink}/${id}`);
 
@@ -24,4 +31,4 @@ const remove = async (id) => {
     return response.data;
 };
 
-export default { getAll, create, remove };
+export default { getAll, create, remove, update };

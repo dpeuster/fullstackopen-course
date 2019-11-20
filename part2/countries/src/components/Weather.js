@@ -9,7 +9,7 @@ const Weather = ({ cityName }) => {
 
     const getWeatherFromApi = () => {
         axios
-            .get(`${weatherApiLink}${cityName}`)
+            .get(`${weatherApiLink}${encodeURI(cityName)}`)
             .then(response => setWeather(response.data))
     };
 

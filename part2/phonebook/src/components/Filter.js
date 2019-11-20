@@ -1,9 +1,7 @@
-import React, { useState } from 'react';
+import React from 'react';
 
-const Filter = () => {
-    const [ filter, setFilter ] = useState('');
-        
-    const handleFilterChange = (event) => setFilter(event.target.value);
+const Filter = ( { filter, onChange }) => {
+    const handleFilterChange = (event) => onChange(event.target.value);
 
     return (
         <>

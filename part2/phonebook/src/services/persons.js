@@ -2,16 +2,26 @@ import axios from 'axios';
 
 const apiLink = "http://localhost:3001/persons";
 
-const getAll = () => {
+const getAll = async () => {
     const request = axios.get(apiLink);
 
-    return request.then(response => response.data);
+    const response = await request;
+    
+    return response.data;
 };
 
-const create = (entry) => {
+const create = async (entry) => {
     const request = axios.post(apiLink, entry);
 
-    return request.then(response => response.data);
+    const response = await request;
+    return response.data;
 };
 
-export default { getAll, create };
+const remove = async (id) => {
+    const request = axios.delete(`${apiLink}/${id}`);
+
+    const response = await request;
+    return response.data;
+};
+
+export default { getAll, create, remove };

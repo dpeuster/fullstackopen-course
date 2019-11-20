@@ -1,8 +1,8 @@
 import React from 'react';
 import Number from './Number';
 
-const Numbers = ({ persons }) => {
-    const entries = persons.map(p => <Number key={p.name} name={p.name} number={p.number}/>)
+const Numbers = ({ persons, onRemove }) => {
+    const entries = persons.map(p => <Number key={p.name} entry={p} onRemove={onRemove}/>)
 
     return (
         <>

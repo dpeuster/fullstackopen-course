@@ -1,20 +1,18 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import personService from './services/persons';
 import Numbers from './components/Numbers';
 import PersonForm from './components/PersonForm';
 import Filter from './components/Filter';
 
 const App = () => {
-    const apiLink = "http://localhost:3001/persons";
-
     const [ persons, setPersons ] = useState([]);
     const [ filter, setFilter ] = useState('');
 
     const getPersons = () => {
-        axios
-            .get(apiLink)
-            .then(response => {
-                setPersons(response.data);
+        personService
+            .getAll()
+            .then(data => {
+                setPersons(data);
             });
     };
 
@@ -27,7 +25,7 @@ const App = () => {
     const submitNewName = (entry) => {
         if (isPersonAdded(entry)) return;
 
-        axios.post(apiLink, entry).then(() => addPersonToLocalList(entry));
+        personService.create(entry).then(addPersonToLocalList);
     }
 
     const addPersonToLocalList = (entry) => {

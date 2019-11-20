@@ -1,12 +1,15 @@
 import React, { useState, useEffect } from 'react';
+import './index.css';
 import personService from './services/persons';
 import Numbers from './components/Numbers';
 import PersonForm from './components/PersonForm';
 import Filter from './components/Filter';
+import Notification from './components/Notification';
 
 const App = () => {
     const [ persons, setPersons ] = useState([]);
     const [ filter, setFilter ] = useState('');
+    const [ notification, setNotification ] = useState({ message: null, type: null })
 
     const getPersons = () => {
         personService
@@ -49,12 +52,21 @@ const App = () => {
         const newList = persons.map(person => person.id !== entry.id ? person : entry);
 
         setPersons(newList);
+
+        displaySuccessNotification(`Changed ${entry.name}s number`);
     };
 
     const addPersonToLocalList = (entry) => {
         const newList = persons.concat(entry);
 
         setPersons(newList);
+
+        displaySuccessNotification(`Added ${entry.name}`);
+    };
+
+    const displaySuccessNotification = (message) => {
+        setNotification({ message, type: 'success' });
+        setTimeout(() => setNotification({ message: null, type: null }), 5000);
     };
 
     const removeEntry = (id) => {
@@ -72,6 +84,7 @@ const App = () => {
     return (
         <div>
     	    <h2>Phonebook</h2>
+            <Notification type={notification.type} message={notification.message} />
             <Filter filter={filter} onChange={onFilterChange} />
             <h2>add a new entry</h2>
             <PersonForm onSubmit={submitNewName} />

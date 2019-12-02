@@ -1,11 +1,6 @@
 {
   "persons": [
     {
-      "name": "test",
-      "number": "125621",
-      "id": 1
-    },
-    {
       "name": "test2",
       "number": "3456",
       "id": 2

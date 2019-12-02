@@ -3,12 +3,12 @@ import React from 'react';
 const Notification = ({ message, type }) => {
     const isNotificationSet = () => message !== null || type !== null;
 
-    console.log(isNotificationSet());
-
     if (!isNotificationSet()) return null;
 
+    const notificationClass = `notification ${type}`;
+
     return (
-        <div className={type}>
+        <div className={notificationClass}>
             {message}
         </div>
     );

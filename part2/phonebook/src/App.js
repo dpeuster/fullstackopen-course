@@ -44,7 +44,10 @@ const App = () => {
             const existingEntry = persons.find(person => person.name === entry.name);
             const changedEntry = { ...entry, id: existingEntry.id };
 
-            personService.update(changedEntry).then(updatePersonInLocalList);
+            personService
+                .update(changedEntry)
+                .then(updatePersonInLocalList)
+                .catch(_ => updateFailed(existingEntry));
         }
     };
 
@@ -55,7 +58,7 @@ const App = () => {
 
         displaySuccessNotification(`Changed ${entry.name}s number`);
     };
-
+    
     const addPersonToLocalList = (entry) => {
         const newList = persons.concat(entry);
 
@@ -66,6 +69,19 @@ const App = () => {
 
     const displaySuccessNotification = (message) => {
         setNotification({ message, type: 'success' });
+        setTimeout(() => setNotification({ message: null, type: null }), 5000);
+    };
+
+    const updateFailed = (entry) => {
+        displayErrorNotification(`Entry of ${entry.name} has already been deleted`);
+        
+        const newList = persons.filter(person => person.id !== entry.id);
+
+        setPersons(newList);
+    };
+
+    const displayErrorNotification = (message) => {
+        setNotification({ message, type: 'error' });
         setTimeout(() => setNotification({ message: null, type: null }), 5000);
     };
 
